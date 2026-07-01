@@ -22,14 +22,73 @@
     }
     /* atmosphere: faint brass glow + grain */
     body::before{
-      content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+      content:"";position:fixed;inset:-60px;z-index:0;pointer-events:none;
       background:
-        radial-gradient(900px 500px at 78% -8%, rgba(201,168,76,.10), transparent 60%),
-        radial-gradient(700px 600px at -10% 110%, rgba(201,168,76,.06), transparent 55%);
+        radial-gradient(1050px 640px at 78% -10%, rgba(201,168,76,.17), transparent 64%),
+        radial-gradient(860px 700px at -14% 108%, rgba(201,168,76,.11), transparent 60%),
+        radial-gradient(760px 560px at 52% 46%, rgba(201,168,76,.06), transparent 62%),
+        radial-gradient(620px 460px at 22% 18%, rgba(216,190,115,.05), transparent 60%);
+      transform:translate(var(--px,0px),var(--py,0px));
+      transition:transform .6s ease-out;
     }
     body::after{
       content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.035;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    /* Drifting gold cloud haze: independent of cursor, always slowly in motion */
+    .atmosphere{position:fixed;inset:-160px;z-index:0;pointer-events:none;overflow:hidden}
+    .haze-blob{position:absolute;filter:blur(95px);mix-blend-mode:screen;will-change:transform,border-radius}
+    .haze-blob.b1{
+      width:820px;height:780px;top:-260px;right:-220px;
+      background:radial-gradient(circle,rgba(201,168,76,.36),transparent 68%);
+      border-radius:44% 56% 61% 39% / 42% 47% 53% 58%;
+      animation:swirl1 34s linear infinite,morph1 16s ease-in-out infinite;
+    }
+    .haze-blob.b2{
+      width:740px;height:700px;bottom:-280px;left:-220px;
+      background:radial-gradient(circle,rgba(201,168,76,.27),transparent 68%);
+      border-radius:58% 42% 45% 55% / 55% 40% 60% 45%;
+      animation:swirl2 41s linear infinite,morph2 20s ease-in-out infinite;
+    }
+    .haze-blob.b3{
+      width:640px;height:600px;top:30%;left:44%;
+      background:radial-gradient(circle,rgba(216,190,115,.18),transparent 68%);
+      border-radius:50% 50% 38% 62% / 60% 45% 55% 40%;
+      animation:swirl3 27s linear infinite,morph3 14s ease-in-out infinite;
+    }
+    /* Continuous circular wind paths, no start/end dwell since it's one linear sweep, never decelerates to a stop */
+    @keyframes swirl1{
+      0%{transform:translate(0,0) rotate(0deg) scale(1)}
+      25%{transform:translate(-110px,60px) rotate(90deg) scale(1.14)}
+      50%{transform:translate(-40px,140px) rotate(180deg) scale(1.22)}
+      75%{transform:translate(80px,70px) rotate(270deg) scale(1.08)}
+      100%{transform:translate(0,0) rotate(360deg) scale(1)}
+    }
+    @keyframes swirl2{
+      0%{transform:translate(0,0) rotate(0deg) scale(1)}
+      25%{transform:translate(100px,-50px) rotate(-90deg) scale(1.1)}
+      50%{transform:translate(30px,-130px) rotate(-180deg) scale(1.2)}
+      75%{transform:translate(-90px,-60px) rotate(-270deg) scale(1.05)}
+      100%{transform:translate(0,0) rotate(-360deg) scale(1)}
+    }
+    @keyframes swirl3{
+      0%{transform:translate(0,0) rotate(0deg) scale(1)}
+      25%{transform:translate(75px,55px) rotate(120deg) scale(1.18)}
+      50%{transform:translate(-25px,95px) rotate(240deg) scale(.92)}
+      75%{transform:translate(-85px,-15px) rotate(300deg) scale(1.1)}
+      100%{transform:translate(0,0) rotate(360deg) scale(1)}
+    }
+    @keyframes morph1{
+      0%,100%{border-radius:44% 56% 61% 39% / 42% 47% 53% 58%}
+      50%{border-radius:62% 38% 40% 60% / 55% 60% 40% 45%}
+    }
+    @keyframes morph2{
+      0%,100%{border-radius:58% 42% 45% 55% / 55% 40% 60% 45%}
+      50%{border-radius:39% 61% 60% 40% / 44% 56% 44% 56%}
+    }
+    @keyframes morph3{
+      0%,100%{border-radius:50% 50% 38% 62% / 60% 45% 55% 40%}
+      50%{border-radius:41% 59% 63% 37% / 42% 58% 42% 58%}
     }
     .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px}
 
@@ -38,13 +97,25 @@
     /* ── Masthead ── */
     header{padding:30px 0 10px}
     .mast{display:flex;align-items:center;gap:14px}
+    .monogram-wrap{position:relative;width:46px;height:46px;flex:none}
     .monogram{
+      position:relative;z-index:1;
       width:46px;height:46px;border-radius:9px;flex:none;
       border:1px solid var(--brass);color:var(--brass);
       display:flex;align-items:center;justify-content:center;
       font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.25rem;letter-spacing:.04em;
       background:linear-gradient(160deg,rgba(201,168,76,.12),transparent);
     }
+    /* Signature ring-pulse, same motif as the phone-ring hero on aidmarketingagency.com */
+    .mono-rings{position:absolute;inset:0;z-index:0;pointer-events:none}
+    .mono-ring{
+      position:absolute;inset:0;border-radius:9px;
+      border:1.5px solid var(--brass);
+      animation:mono-pulse 2.1s ease-out infinite;
+    }
+    .mono-ring.r2{animation-delay:.7s}
+    .mono-ring.r3{animation-delay:1.4s}
+    @keyframes mono-pulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(2.3);opacity:0}}
     .mast .name{font-weight:600;font-size:.96rem;letter-spacing:.02em}
     .mast .sub{font-size:.72rem;color:var(--ash);text-transform:uppercase;letter-spacing:.22em}
 
@@ -80,10 +151,16 @@
     .agenda{list-style:none;display:flex;flex-direction:column;gap:18px;margin-bottom:30px}
     .agenda li{display:flex;gap:14px;align-items:flex-start}
     .agenda .num{
+      position:relative;
       flex:none;width:30px;height:30px;border-radius:8px;border:1px solid var(--hair);
       color:var(--brass);font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;
       display:flex;align-items:center;justify-content:center;margin-top:1px;
     }
+    .agenda .num::after{
+      content:"";position:absolute;left:5px;right:5px;bottom:-7px;height:2px;background:var(--brass);
+      width:0;transition:width .6s ease;
+    }
+    .agenda li.in-view .num::after{width:calc(100% - 10px)}
     .agenda .t{font-weight:600;color:var(--bone);font-size:.98rem}
     .agenda .d{color:var(--ash);font-size:.88rem;line-height:1.5}
 
@@ -96,6 +173,13 @@
       background:radial-gradient(circle at 30% 25%,var(--brass-soft),var(--brass) 60%,#8a6f25);
       color:var(--void);display:flex;align-items:center;justify-content:center;
       font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.3rem;
+    }
+    img.host-photo{
+      width:52px;height:52px;border-radius:50%;flex:none;object-fit:cover;
+      border:1px solid var(--hair);filter:sepia(.15) saturate(1.15) contrast(1.03);
+    }
+    @media (prefers-reduced-motion:reduce){
+      body::before,.agenda .num::after{transition:none!important}
     }
     .host .who{font-weight:600;color:var(--bone)}
     .host .role{font-size:.82rem;color:var(--ash)}
@@ -120,6 +204,21 @@
 
     @media (max-width:880px){
       .booking{grid-template-columns:1fr;gap:30px}
-      .rail{order:-1}
       .hero{padding-top:40px}
+    }
+    /* Phones: shrink hero + lead with the calendar so booking is reachable fast */
+    @media (max-width:640px){
+      header{padding:18px 0 6px}
+      .hero{padding:22px 0 8px}
+      .eyebrow{margin-bottom:14px;padding:5px 13px;font-size:.68rem}
+      .hero h1{font-size:clamp(1.7rem,8vw,2.15rem);line-height:1.1}
+      .hero p{margin-top:12px;font-size:.96rem}
+      .booking{padding:24px 0 14px;gap:22px}
+      .booker-card{min-height:auto}
+      .booker-card .cal-frame{min-height:520px}
+      #cal-inline{min-height:520px}
+      .booker-card iframe{min-height:520px}
+      .rail h2{font-size:1.5rem;margin-bottom:4px}
+      .rail .lead{margin-bottom:16px}
+      .agenda{gap:13px;margin-bottom:20px}
     }
