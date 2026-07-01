@@ -24,10 +24,10 @@
     body::before{
       content:"";position:fixed;inset:-60px;z-index:0;pointer-events:none;
       background:
-        radial-gradient(1050px 640px at 78% -10%, rgba(201,168,76,.17), transparent 64%),
-        radial-gradient(860px 700px at -14% 108%, rgba(201,168,76,.11), transparent 60%),
-        radial-gradient(760px 560px at 52% 46%, rgba(201,168,76,.06), transparent 62%),
-        radial-gradient(620px 460px at 22% 18%, rgba(216,190,115,.05), transparent 60%);
+        radial-gradient(1050px 640px at 78% -10%, rgba(201,168,76,.13), transparent 64%),
+        radial-gradient(860px 700px at -14% 108%, rgba(201,168,76,.085), transparent 60%),
+        radial-gradient(760px 560px at 52% 46%, rgba(201,168,76,.045), transparent 62%),
+        radial-gradient(620px 460px at 22% 18%, rgba(216,190,115,.035), transparent 60%);
       transform:translate(var(--px,0px),var(--py,0px));
       transition:transform .6s ease-out;
     }
@@ -40,42 +40,56 @@
     .haze-blob{position:absolute;filter:blur(95px);mix-blend-mode:screen;will-change:transform,border-radius}
     .haze-blob.b1{
       width:820px;height:780px;top:-260px;right:-220px;
-      background:radial-gradient(circle,rgba(201,168,76,.36),transparent 68%);
+      background:radial-gradient(circle,rgba(201,168,76,.29),transparent 68%);
       border-radius:44% 56% 61% 39% / 42% 47% 53% 58%;
-      animation:swirl1 34s linear infinite,morph1 16s ease-in-out infinite;
+      animation:swirl1 19s linear infinite,morph1 10s ease-in-out infinite;
     }
     .haze-blob.b2{
       width:740px;height:700px;bottom:-280px;left:-220px;
-      background:radial-gradient(circle,rgba(201,168,76,.27),transparent 68%);
+      background:radial-gradient(circle,rgba(201,168,76,.21),transparent 68%);
       border-radius:58% 42% 45% 55% / 55% 40% 60% 45%;
-      animation:swirl2 41s linear infinite,morph2 20s ease-in-out infinite;
+      animation:swirl2 23s linear infinite,morph2 13s ease-in-out infinite;
     }
     .haze-blob.b3{
       width:640px;height:600px;top:30%;left:44%;
-      background:radial-gradient(circle,rgba(216,190,115,.18),transparent 68%);
+      background:radial-gradient(circle,rgba(216,190,115,.13),transparent 68%);
       border-radius:50% 50% 38% 62% / 60% 45% 55% 40%;
-      animation:swirl3 27s linear infinite,morph3 14s ease-in-out infinite;
+      animation:swirl3 15s linear infinite,morph3 9s ease-in-out infinite;
+    }
+    /* Mobile: much darker, blobs pulled small and tucked into corners so it reads as black with a hint of gold, not a gold screen */
+    @media (max-width:640px){
+      .haze-blob{filter:blur(58px)}
+      .haze-blob.b1{width:440px;height:420px;top:-140px;right:-130px;background:radial-gradient(circle,rgba(201,168,76,.16),transparent 68%)}
+      .haze-blob.b2{width:400px;height:380px;bottom:-150px;left:-130px;background:radial-gradient(circle,rgba(201,168,76,.12),transparent 68%)}
+      .haze-blob.b3{width:340px;height:320px;background:radial-gradient(circle,rgba(216,190,115,.07),transparent 68%)}
+      body::before{
+        background:
+          radial-gradient(700px 460px at 82% -8%, rgba(201,168,76,.08), transparent 64%),
+          radial-gradient(600px 500px at -12% 106%, rgba(201,168,76,.055), transparent 60%),
+          radial-gradient(500px 380px at 52% 46%, rgba(201,168,76,.03), transparent 62%),
+          radial-gradient(420px 320px at 22% 18%, rgba(216,190,115,.02), transparent 60%);
+      }
     }
     /* Continuous circular wind paths, no start/end dwell since it's one linear sweep, never decelerates to a stop */
     @keyframes swirl1{
       0%{transform:translate(0,0) rotate(0deg) scale(1)}
-      25%{transform:translate(-110px,60px) rotate(90deg) scale(1.14)}
-      50%{transform:translate(-40px,140px) rotate(180deg) scale(1.22)}
-      75%{transform:translate(80px,70px) rotate(270deg) scale(1.08)}
+      25%{transform:translate(-150px,85px) rotate(90deg) scale(1.2)}
+      50%{transform:translate(-55px,190px) rotate(180deg) scale(1.3)}
+      75%{transform:translate(110px,95px) rotate(270deg) scale(1.1)}
       100%{transform:translate(0,0) rotate(360deg) scale(1)}
     }
     @keyframes swirl2{
       0%{transform:translate(0,0) rotate(0deg) scale(1)}
-      25%{transform:translate(100px,-50px) rotate(-90deg) scale(1.1)}
-      50%{transform:translate(30px,-130px) rotate(-180deg) scale(1.2)}
-      75%{transform:translate(-90px,-60px) rotate(-270deg) scale(1.05)}
+      25%{transform:translate(135px,-68px) rotate(-90deg) scale(1.16)}
+      50%{transform:translate(40px,-175px) rotate(-180deg) scale(1.28)}
+      75%{transform:translate(-120px,-80px) rotate(-270deg) scale(1.08)}
       100%{transform:translate(0,0) rotate(-360deg) scale(1)}
     }
     @keyframes swirl3{
       0%{transform:translate(0,0) rotate(0deg) scale(1)}
-      25%{transform:translate(75px,55px) rotate(120deg) scale(1.18)}
-      50%{transform:translate(-25px,95px) rotate(240deg) scale(.92)}
-      75%{transform:translate(-85px,-15px) rotate(300deg) scale(1.1)}
+      25%{transform:translate(105px,75px) rotate(120deg) scale(1.26)}
+      50%{transform:translate(-35px,130px) rotate(240deg) scale(.86)}
+      75%{transform:translate(-115px,-20px) rotate(300deg) scale(1.15)}
       100%{transform:translate(0,0) rotate(360deg) scale(1)}
     }
     @keyframes morph1{
